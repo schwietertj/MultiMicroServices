@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  mmsdb:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD: "B@nkerBox2019"
+      - MYSQL_DATABASE: "db"
+
+  mmsrabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+
+  mmsredis:
+    image: redis
+    expose:
+      - 6379
+
+  multimicroservicesapp:
+    image: ${DOCKER_REGISTRY-}multimicroservicesapp
+    build:
+      context: .
+      dockerfile: MultiMicroServicesApp/Dockerfile
+    environment:
+      - redisurl=redis://cache
+    depends_on:
+      - mmsdb
+      - mmsrabbitmq
+      - mmsredis
