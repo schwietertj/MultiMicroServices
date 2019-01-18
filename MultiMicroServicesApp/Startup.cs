@@ -25,10 +25,10 @@ namespace MultiMicroServicesApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                {
-                    options.UseMySql(DotNetEnv.Env.GetString("connectionstring"));
-                });
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    {
+            //        options.UseMySql(DotNetEnv.Env.GetString("connectionstring"));
+            //    });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -53,7 +53,7 @@ namespace MultiMicroServicesApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            RunMigrations(app);
+            //RunMigrations(app);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

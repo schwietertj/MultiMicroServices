@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MicroServicesDataModels\MicroServicesDataModels.csproj" />
+    <ProjectReference Include="..\TweetPull\TweetPull.csproj" />
   </ItemGroup>
 
 
