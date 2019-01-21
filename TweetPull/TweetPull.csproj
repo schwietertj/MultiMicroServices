@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="TweetMoaSharp" Version="6.0.0" />
+    <PackageReference Include="TweetinviAPI" Version="4.0.0" />
   </ItemGroup>
 
 </Project>

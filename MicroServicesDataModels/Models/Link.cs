@@ -6,6 +6,7 @@ namespace MicroServicesDataModels.Models
     public class Link : BaseEntity
     {
         public long EventId { get; set; }
+        public long LinkTypeId { get; set; }
 
         [Required]
         [MaxLength(1024)]
@@ -16,5 +17,8 @@ namespace MicroServicesDataModels.Models
 
         [ForeignKey("EventId")]
         public Event Event { get; set; }
+
+        [ForeignKey("LinkTypeId")]
+        public LinkType LinkType { get; set; }
     }
 }

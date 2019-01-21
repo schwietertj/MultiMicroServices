@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using TweetSharp;
+using Tweetinvi.Models;
 
 namespace TweetPull
 {
     public interface ITweetReader
     {
-        Task<TwitterAsyncResult<TwitterRateLimitStatusSummary>> GetCurrentRateLimit();
-        Task<TwitterAsyncResult<IEnumerable<TwitterStatus>>> GetTweets(string screenName, bool includeRetweets, bool includeReplies);
+        List<ITweet> GetAllUserTweets(string userHandle);
+        List<ITweet> GetLatestTweets(string userHandle, int maxTweets = 200);
     }
 }

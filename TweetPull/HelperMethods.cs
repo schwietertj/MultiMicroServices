@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("MultiMicroServicesUnitTests")]
 namespace TweetPull
 {
-    internal class HelperMethods
+    public class HelperMethods
     {
         public static T GetEnvironmentVariable<T>(string variableName)
         {
