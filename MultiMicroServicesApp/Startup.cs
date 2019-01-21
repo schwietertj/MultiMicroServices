@@ -25,12 +25,12 @@ namespace MultiMicroServicesApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    {
-            //        options.UseMySql(DotNetEnv.Env.GetString("connectionstring"));
-            //    });
+			services.AddDbContext<ApplicationDbContext>(options =>
+				{
+					options.UseMySql(DotNetEnv.Env.GetString("connectionstring"));
+				});
 
-            services.Configure<CookiePolicyOptions>(options =>
+			services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
@@ -53,7 +53,7 @@ namespace MultiMicroServicesApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            //RunMigrations(app);
+            RunMigrations(app);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -68,13 +68,20 @@ namespace MultiMicroServicesApp
 
         private void RunMigrations(IApplicationBuilder app)
         {
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                using (var ctx = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
-                {
-                    ctx.Database.Migrate();
-                }
-            }
+			try
+			{
+				using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+				{
+					using (var ctx = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
+					{
+						ctx.Database.Migrate();
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
         }
     }
 }

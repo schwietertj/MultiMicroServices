@@ -1,11 +1,9 @@
-using System;
-using System.Threading.Tasks;
 using TweetPull;
 using Xunit;
 
 namespace MultiMicroServicesUnitTests
 {
-    public class TwitterTests
+	public class TwitterTests
     {
         [Fact]
         public void TestEnvironmentVariables()
@@ -25,5 +23,14 @@ namespace MultiMicroServicesUnitTests
             var rateLimit = tweetReader.GetCurrentRateLimit().Result;
             Assert.NotNull(rateLimit);
         }
-    }
+
+		[Fact]
+		public void TestTwitterPull()
+		{
+			DotNetEnv.Env.Load();
+			ITweetReader tweetReader = new TweetReader();
+			var tweets = tweetReader.GetTweets("@jbschwi", false, false).Result;
+			Assert.NotNull(tweets);
+		}
+	}
 }

@@ -39,6 +39,7 @@ namespace TweetPull
 
         public async Task<TwitterAsyncResult<IEnumerable<TwitterStatus>>> GetTweets(string screenName, bool includeRetweets, bool includeReplies)
         {
+			var balls = _twitterService.
             return await _twitterService.ListTweetsOnUserTimelineAsync(new ListTweetsOnUserTimelineOptions {ScreenName = screenName, IncludeRts = includeRetweets, ExcludeReplies = !includeReplies});
         }
 

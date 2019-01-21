@@ -1,46 +1,31 @@
 version: '3.4'
 
 services:
-  mmsdb:
-    image: mysql
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD:BankerBox2019
-      - MYSQL_DATABASE:db
-    volumes:
-      - //C/Projects/MultiMicroServices/db:/var/lib/mysql
-    networks:
-      - appnet
-
-  mmsrabbitmq:
+  rabbit:
     image: rabbitmq:3-management
     ports:
       - "15672:15672"
-    networks:
-      - appnet
-
-  mmsredis:
+  db:
+     image: mysql:5.7
+     environment:
+       "MYSQL_ROOT_PASSWORD": "BankerBox2019"
+       "MYSQL_DATABASE": "multidb"
+     volumes:
+       - //C/Projects/MultiMicroServices/db:/var/lib/mysql
+     restart: always
+  redis:
     image: redis
-    expose:
-      - 6379
-    networks:
-      - appnet
-
-  multimicroservicesapp:
+    ports:
+      - "6379:6379"
+  mms.api:
     image: ${DOCKER_REGISTRY-}multimicroservicesapp
+    ports:
+      - "5001:5001"
+      - "5000:5000"
     build:
       context: .
       dockerfile: MultiMicroServicesApp/Dockerfile
-    environment:
-      - redisurl=redis://cache
     depends_on:
-      - mmsdb
-      - mmsrabbitmq
-      - mmsredis
-    networks:
-      - appnet
-
-networks:
-  appnet:
-    driver: bridge
+      - db
+      - rabbit
+      - redis

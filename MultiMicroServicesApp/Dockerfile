@@ -16,4 +16,4 @@ RUN dotnet publish MultiMicroServicesApp.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "MultiMicroServicesApp.dll"]
+CMD ["dotnet", "MultiMicroServicesApp.dll"]
